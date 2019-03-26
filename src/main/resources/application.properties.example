@@ -1,0 +1,15 @@
+initial_context_factory=com.sun.jndi.ldap.LdapCtxFactory
+security_authentication=simple
+security_principal=
+security_credentials=
+provider_url=
+referral=follow
+ldap_user_search_base=
+ldap_user_name_attribute=sAMAccountName
+ldap_user_uid_attribute=sAMAccountName
+ldap_group_search_base=
+# {dn} will be replaced by the dn name of the user
+ldap_group_search_filter=(&(member={dn})(objectClass=group))
+ldap_user_dn_attribute=distinguishedname
+public_key_path=
+server.port=8087
