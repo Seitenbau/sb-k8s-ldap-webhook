@@ -87,6 +87,9 @@
               <classpathPrefix>lib/</classpathPrefix>
             </manifest>
           </archive>
+          <excludes>
+            <exclude>**/*.properties</exclude>
+          </excludes>
         </configuration>
       </plugin>
       <plugin>
