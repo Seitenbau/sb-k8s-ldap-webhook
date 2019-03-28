@@ -9,11 +9,13 @@ WORKDIR /app
 
 COPY --from=build /usr/src/app/target/kube.auth-*.jar ./kube.auth.jar
 COPY --from=build /usr/src/app/target/lib ./lib
-COPY docker .
+COPY docker/token.sh .
+COPY docker/app.sh /usr/local/bin/
 
+RUN ln -s /usr/local/bin/app.sh /
 RUN apk update && apk add bash
 
 VOLUME config
 
 EXPOSE 8087
-ENTRYPOINT ["java", "-cp", "kube.auth.jar", "baubau.kube.auth.Application"]
+ENTRYPOINT ["app.sh"]
