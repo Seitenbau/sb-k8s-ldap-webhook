@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AuthToken
+public class Spec
 {
   private String token;
 }

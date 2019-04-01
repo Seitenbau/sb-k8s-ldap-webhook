@@ -1,7 +1,7 @@
 package baubau.kube.auth.controller;
 
+import baubau.kube.auth.model.AuthPost;
 import baubau.kube.auth.model.AuthResponse;
-import baubau.kube.auth.model.AuthToken;
 import baubau.kube.auth.model.User;
 import baubau.kube.auth.service.JWT;
 import baubau.kube.auth.service.LDAP;
@@ -42,19 +42,19 @@ public class AuthController
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "authn", produces = APPLICATION_JSON_VALUE)
-  public AuthResponse authn(@RequestBody AuthToken authToken)
+  public AuthResponse authn(@RequestBody AuthPost authPost)
   {
     final String methodName = getMethodName(new Object()
     {
     });
-    log.trace("Start: '" + methodName + "' with parameter authToken: " + authToken);
+    log.trace("Start: '" + methodName + "' with parameter authToken: " + authPost.toString());
 
     AuthResponse response = new AuthResponse();
 
     Jws<Claims> jws;
     try
     {
-      jws = jwt.validateToken(authToken.getToken());
+      jws = jwt.validateToken(authPost.getSpec().getToken());
       User user = ldap.getUserWithGroups(jws.getBody().getSubject());
       if (user != null)
       {

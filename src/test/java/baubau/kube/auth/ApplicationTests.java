@@ -1,6 +1,7 @@
 package baubau.kube.auth;
 
-import baubau.kube.auth.model.AuthToken;
+import baubau.kube.auth.model.AuthPost;
+import baubau.kube.auth.model.Spec;
 import baubau.kube.auth.service.JWT;
 import com.google.gson.Gson;
 import org.junit.Before;
@@ -48,11 +49,12 @@ public class ApplicationTests
   @Test
   public void authTest() throws Exception
   {
-    AuthToken token = new AuthToken();
-    token.setToken(jwt.buildToken("usernotdefined", "issuer"));
+    AuthPost post = new AuthPost();
+    post.setSpec(new Spec());
+    post.getSpec().setToken(jwt.buildToken("usernotdefined", "issuer"));
     Gson gson = new Gson();
 
-    mvc.perform(post("/authn").contentType(MediaType.APPLICATION_JSON_VALUE).content(gson.toJson(token)))
+    mvc.perform(post("/authn").contentType(MediaType.APPLICATION_JSON_VALUE).content(gson.toJson(post)))
        .andExpect(status().isOk())
        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
        .andExpect(jsonPath("$.kind", is("TokenReview")))
