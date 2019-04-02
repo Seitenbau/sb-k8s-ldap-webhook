@@ -9,7 +9,7 @@ FROM openjdk:8-jre-alpine
 
 WORKDIR /app
 
-COPY --from=build /usr/src/app/target/kube.auth-*.jar ./kube.auth.jar
+COPY --from=build /usr/src/app/target/kube-auth-*.jar ./kube.auth.jar
 COPY --from=build /usr/src/app/target/lib ./lib
 COPY docker/token.sh .
 COPY docker/app.sh /usr/local/bin/
