@@ -43,7 +43,7 @@ public class ApplicationTests
   @Test
   public void healthIsAvailable() throws Exception
   {
-    mvc.perform(get("/health")).andExpect(status().isOk());
+    mvc.perform(get("/healthz")).andExpect(status().isOk());
   }
 
   @Test

@@ -35,10 +35,10 @@ public class AuthController
     this.ldap = ldap;
   }
 
-  @RequestMapping(value = "/health", produces = TEXT_PLAIN_VALUE)
+  @RequestMapping(value = "/healthz", produces = TEXT_PLAIN_VALUE)
   public String health()
   {
-    return "ok";
+    return "OK\n";
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "authn", produces = APPLICATION_JSON_VALUE)
