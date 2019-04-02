@@ -8,10 +8,10 @@
     <version>2.1.3.RELEASE</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
-  <groupId>baubau</groupId>
-  <artifactId>kube.auth</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>kube.auth</name>
+  <groupId>com.seitenbau.k8s</groupId>
+  <artifactId>kube-auth</artifactId>
+  <version>0.9.0</version>
+  <name>kube-auth</name>
   <description>Cluster Authentication over LDAP</description>
 
   <properties>
@@ -82,13 +82,14 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>baubau.kube.auth.JWTToken</mainClass>
+              <mainClass>com.seitenbau.k8s.auth.JWTToken</mainClass>
               <addClasspath>true</addClasspath>
               <classpathPrefix>lib/</classpathPrefix>
             </manifest>
           </archive>
           <excludes>
             <exclude>**/application.properties</exclude>
+            <exclude>**/application.properties.example</exclude>
           </excludes>
         </configuration>
       </plugin>

@@ -1,4 +1,4 @@
-package baubau.kube.auth.service;
+package com.seitenbau.k8s.auth.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -22,7 +22,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.Date;
 
-import static baubau.kube.auth.utils.Utils.getMethodName;
+import static com.seitenbau.k8s.auth.utils.Utils.getMethodName;
 
 @Service
 @Slf4j

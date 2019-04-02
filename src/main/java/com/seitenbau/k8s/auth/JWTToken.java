@@ -1,6 +1,6 @@
-package baubau.kube.auth;
+package com.seitenbau.k8s.auth;
 
-import baubau.kube.auth.service.JWT;
+import com.seitenbau.k8s.auth.service.JWT;
 
 public class JWTToken
 {

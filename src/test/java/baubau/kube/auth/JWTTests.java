@@ -1,6 +1,6 @@
 package baubau.kube.auth;
 
-import baubau.kube.auth.service.JWT;
+import com.seitenbau.k8s.auth.service.JWT;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.UnsupportedJwtException;

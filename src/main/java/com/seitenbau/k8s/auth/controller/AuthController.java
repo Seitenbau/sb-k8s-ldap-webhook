@@ -1,10 +1,10 @@
-package baubau.kube.auth.controller;
+package com.seitenbau.k8s.auth.controller;
 
-import baubau.kube.auth.model.AuthPost;
-import baubau.kube.auth.model.AuthResponse;
-import baubau.kube.auth.model.User;
-import baubau.kube.auth.service.JWT;
-import baubau.kube.auth.service.LDAP;
+import com.seitenbau.k8s.auth.model.AuthPost;
+import com.seitenbau.k8s.auth.model.AuthResponse;
+import com.seitenbau.k8s.auth.model.User;
+import com.seitenbau.k8s.auth.service.JWT;
+import com.seitenbau.k8s.auth.service.LDAP;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
 
-import static baubau.kube.auth.utils.Utils.getMethodName;
+import static com.seitenbau.k8s.auth.utils.Utils.getMethodName;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.MediaType.TEXT_PLAIN_VALUE;
 

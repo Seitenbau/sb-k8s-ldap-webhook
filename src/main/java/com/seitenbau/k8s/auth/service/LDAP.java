@@ -1,6 +1,6 @@
-package baubau.kube.auth.service;
+package com.seitenbau.k8s.auth.service;
 
-import baubau.kube.auth.model.User;
+import com.seitenbau.k8s.auth.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-import static baubau.kube.auth.utils.Utils.getMethodName;
+import static com.seitenbau.k8s.auth.utils.Utils.getMethodName;
 
 @Service
 @Slf4j

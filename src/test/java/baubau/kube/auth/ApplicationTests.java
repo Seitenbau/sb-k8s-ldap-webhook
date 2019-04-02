@@ -1,9 +1,9 @@
 package baubau.kube.auth;
 
-import baubau.kube.auth.model.AuthPost;
-import baubau.kube.auth.model.Spec;
-import baubau.kube.auth.service.JWT;
 import com.google.gson.Gson;
+import com.seitenbau.k8s.auth.model.AuthPost;
+import com.seitenbau.k8s.auth.model.Spec;
+import com.seitenbau.k8s.auth.service.JWT;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

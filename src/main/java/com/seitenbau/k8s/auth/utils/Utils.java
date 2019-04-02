@@ -1,4 +1,4 @@
-package baubau.kube.auth.utils;
+package com.seitenbau.k8s.auth.utils;
 
 public class Utils
 {

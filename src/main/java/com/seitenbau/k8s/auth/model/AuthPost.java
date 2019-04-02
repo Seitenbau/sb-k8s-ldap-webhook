@@ -1,4 +1,4 @@
-package baubau.kube.auth.model;
+package com.seitenbau.k8s.auth.model;
 
 import lombok.Getter;
 import lombok.Setter;
