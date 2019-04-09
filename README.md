@@ -1,6 +1,6 @@
 # Java Kubeernetes LDAP Authentication
 
-This is a service that enables users in Kubernetes to authenticate via LDAP.  For this a signed token is sent to the service, which contains subject, exhibitor and time of the exhibition. The signature of the token is verified with the public key and the corresponding groups are loaded from the LDAP. The algorithm is based on RS512. 
+This is a com.seitenbau.k8s.jwt.service that enables users in Kubernetes to authenticate via LDAP.  For this a signed token is sent to the com.seitenbau.k8s.jwt.service, which contains subject, exhibitor and time of the exhibition. The signature of the token is verified with the public key and the corresponding groups are loaded from the LDAP. The algorithm is based on RS512. 
 
 
 ## Usage

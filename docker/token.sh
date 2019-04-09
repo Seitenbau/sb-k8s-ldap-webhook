@@ -25,4 +25,4 @@ esac
 done
 set -- "${POSITIONAL[@]}"
 
-java -jar kube.auth.jar ${SUBJECT} ${ISSUER} ${KEYPATH}
+java -cp kube.auth.jar com.seitenbau.k8s.jwt.JWTToken ${SUBJECT} ${ISSUER} ${KEYPATH}
