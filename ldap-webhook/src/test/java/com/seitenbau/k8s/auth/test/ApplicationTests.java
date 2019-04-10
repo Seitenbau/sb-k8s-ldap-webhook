@@ -51,7 +51,7 @@ public class ApplicationTests
   {
     AuthPost post = new AuthPost();
     post.setSpec(new Spec());
-    post.getSpec().setToken(jwt.buildToken("usernotdefined", "issuer"));
+    post.getSpec().setToken(jwt.buildToken("usernotdefined", "issuer", 15));
     Gson gson = new Gson();
 
     mvc.perform(post("/authn").contentType(MediaType.APPLICATION_JSON_VALUE).content(gson.toJson(post)))

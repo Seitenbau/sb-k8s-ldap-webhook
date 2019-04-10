@@ -7,6 +7,7 @@ import com.seitenbau.k8s.auth.model.User;
 import com.seitenbau.k8s.auth.service.LDAP;
 import com.seitenbau.k8s.jwt.service.JWT;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
@@ -62,6 +63,10 @@ public class AuthController
         response.authenticated(true);
         response.getStatus().put("user", user);
       }
+    }
+    catch (ExpiredJwtException e)
+    {
+      log.error("token is expired", e);
     }
     catch (JwtException e)
     {

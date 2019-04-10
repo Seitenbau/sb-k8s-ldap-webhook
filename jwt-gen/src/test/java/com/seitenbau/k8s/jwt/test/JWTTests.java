@@ -2,6 +2,7 @@ package com.seitenbau.k8s.jwt.test;
 
 import com.seitenbau.k8s.jwt.service.JWT;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
@@ -31,7 +32,7 @@ public class JWTTests
   {
     String subject = "subject";
     String issuer = "issuer";
-    String token = jwt.buildToken(subject, issuer);
+    String token = jwt.buildToken(subject, issuer, 15);
     Jws<Claims> claims = jwt.validateToken(token);
 
     assertEquals(claims.getBody().getSubject(), subject);
@@ -61,5 +62,14 @@ public class JWTTests
         ".AO-eixnrGUE-3WkWTRuJuDwXhFSjRMVDhRjFoXPRpCLiAg2DuN94W4wZeGS5UkyuOTSIHcnJ8BVnuxhbTYjVr" +
         "-OoAS_ED4EIaqEIDZ1Ph0BjS-dKecAMGqowA9whzl5grqbXk-zIMgLWAeyGd0AnduyiK7zY3WEfUG5WWgznpnWacATO";
     jwt.validateToken(fakeToken);
+  }
+
+  @Test(expected = ExpiredJwtException.class)
+  public void validationTokenIsExpired()
+  {
+    String subject = "subject";
+    String issuer = "issuer";
+    String token = jwt.buildToken(subject, issuer, -1);
+    jwt.validateToken(token);
   }
 }

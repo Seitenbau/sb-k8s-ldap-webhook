@@ -1,7 +1,7 @@
 FROM maven:3.5.2-jdk-8 AS build
 
 COPY ldap-webhook /usr/src/app/ldap-webhook
-COPY jwt-token /usr/src/app/jwt-token
+COPY jwt-gen /usr/src/app/jwt-gen
 COPY pom.xml /usr/src/app
 
 RUN mvn -f /usr/src/app/pom.xml clean package

@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <packaging>pom</packaging>
   <modules>
-    <module>jwt-token</module>
+    <module>jwt-gen</module>
     <module>ldap-webhook</module>
   </modules>
   <groupId>com.seitenbau.k8s</groupId>

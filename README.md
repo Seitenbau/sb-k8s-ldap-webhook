@@ -24,9 +24,11 @@ docker pull seitenbau/k8s-ldap-webhook
     - needed parameters:
         - &ndash;s &rarr; subject
         - &ndash;i &rarr; issuer
-        - &ndash;p &rarr; path to private key inside container 
+        - &ndash;f &rarr; private key file inside container 
+        - &ndash;e &rarr; days until expiration
+        - &ndash;h &rarr; show help
 ```bash
-docker run -v /path/to/folder/with/private_key:/app/config --entrypoint ./token.sh kubeauth -s subject -i issuer -p ./config/<private_key_name>.pem
+docker run -v /path/to/folder/with/private_key:/app/config --entrypoint ./token.sh kubeauth -s subject -i issuer -f ./config/<private_key_name>.pem
 ```
 - token will be printed to console
 - inspect your token on [jwt.io](https://jwt.io/)

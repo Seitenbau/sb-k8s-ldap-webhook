@@ -1,28 +1,3 @@
 #!/usr/bin/env bash
 
-POSITIONAL=()
-while [[ $# -gt 0 ]]
-do
-key="$1"
-
-case $key in
-    -s)
-    SUBJECT="$2"
-    shift # past argument
-    shift # past value
-    ;;
-    -i)
-    ISSUER="$2"
-    shift # past argument
-    shift # past value
-    ;;
-    -p)
-    KEYPATH="$2"
-    shift # past argument
-    shift # past value
-    ;;
-esac
-done
-set -- "${POSITIONAL[@]}"
-
-java -cp kube.auth.jar com.seitenbau.k8s.jwt.JWTToken ${SUBJECT} ${ISSUER} ${KEYPATH}
+java -cp kube.auth.jar com.seitenbau.k8s.jwt.JWTGen $@

@@ -19,6 +19,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
+import java.util.Calendar;
 import java.util.Date;
 
 import static com.seitenbau.k8s.jwt.utils.Utils.getMethodName;
@@ -99,7 +100,7 @@ public class JWT
     return Jwts.parser().setSigningKey(publicKey).parseClaimsJws(token);
   }
 
-  public String buildToken(String subject, String issuer)
+  public String buildToken(String subject, String issuer, int time)
   {
     final String methodName = getMethodName(new Object()
     {
@@ -113,6 +114,7 @@ public class JWT
                    .setSubject(subject)
                    .setIssuer(issuer)
                    .setIssuedAt(new Date())
+                   .setExpiration(calculateExpirationDate(time))
                    .signWith(readPrivateKey())
                    .compact();
     }
@@ -123,5 +125,14 @@ public class JWT
 
     log.trace("End: " + methodName);
     return result;
+  }
+
+  private Date calculateExpirationDate(int time)
+  {
+    Calendar c = Calendar.getInstance();
+    c.setTime(new Date());
+    c.add(Calendar.DATE, time);
+
+    return c.getTime();
   }
 }
