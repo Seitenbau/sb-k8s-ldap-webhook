@@ -51,7 +51,7 @@
     </dependency>
     <dependency>
       <groupId>com.seitenbau.k8s</groupId>
-      <artifactId>jwt-token</artifactId>
+      <artifactId>jwt-gen</artifactId>
       <version>0.9.0-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
