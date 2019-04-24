@@ -48,6 +48,7 @@ public class JWT
     String privateKeyContent = new String(Files.readAllBytes(Paths.get(PRIVATE_KEY_PATH)));
 
     privateKeyContent = privateKeyContent.replaceAll("\\n", "")
+                                         .replaceAll("\\r","")
                                          .replace("-----BEGIN PRIVATE KEY-----", "")
                                          .replace("-----END PRIVATE KEY-----", "");
 
@@ -69,6 +70,7 @@ public class JWT
 
     String publicKeyContent = new String(Files.readAllBytes(Paths.get(PUBLIC_KEY_PATH)));
     publicKeyContent = publicKeyContent.replaceAll("\\n", "")
+                                       .replaceAll("\\r","")
                                        .replace("-----BEGIN PUBLIC KEY-----", "")
                                        .replace("-----END PUBLIC KEY-----", "");
     KeyFactory kf = KeyFactory.getInstance("RSA");
