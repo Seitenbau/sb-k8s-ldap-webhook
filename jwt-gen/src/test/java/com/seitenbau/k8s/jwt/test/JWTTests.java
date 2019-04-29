@@ -1,6 +1,7 @@
 package com.seitenbau.k8s.jwt.test;
 
 import com.seitenbau.k8s.jwt.service.JWT;
+import com.seitenbau.k8s.jwt.service.KeyReader;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
@@ -9,6 +10,9 @@ import io.jsonwebtoken.security.SignatureException;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Date;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,11 +24,22 @@ public class JWTTests
 {
   private JWT jwt = new JWT();
 
+  private KeyReader keyReader = new KeyReader();
+
   @Before
   public void setKeyPath()
   {
-    jwt.setPUBLIC_KEY_PATH("src/test/java/com/seitenbau/k8s/jwt/test/test_public_key.pem");
-    jwt.setPRIVATE_KEY_PATH("src/test/java/com/seitenbau/k8s/jwt/test/test_private_key_pkcs8.pem");
+    try
+    {
+      jwt.setPublicKey(keyReader.readPublicKey("src/test/java/com/seitenbau/k8s/jwt/test/test_public_key.pem"));
+      jwt.setPrivateKey(keyReader.readPrivateKey(
+          "src/test/java/com/seitenbau/k8s/jwt/test/test_private_key_pkcs8" + ".pem"));
+
+    }
+    catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException e)
+    {
+      e.printStackTrace();
+    }
   }
 
   @Test

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.seitenbau.k8s.auth.model.AuthPost;
 import com.seitenbau.k8s.auth.model.Spec;
 import com.seitenbau.k8s.jwt.service.JWT;
+import com.seitenbau.k8s.jwt.service.KeyReader;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +15,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -33,11 +38,20 @@ public class ApplicationTests
 
   private JWT jwt = new JWT();
 
+  private KeyReader keyReader = new KeyReader();
+
   @Before
   public void setKeyPath()
   {
-    jwt.setPUBLIC_KEY_PATH("src/test/java/com/seitenbau/k8s/auth/test/test_public_key.pem");
-    jwt.setPRIVATE_KEY_PATH("src/test/java/com/seitenbau/k8s/auth/test/test_private_key_pkcs8.pem");
+    try
+    {
+      jwt.setPublicKey(keyReader.readPublicKey("com/seitenbau/k8s/auth/test/test_public_key.pem"));
+      jwt.setPrivateKey(keyReader.readPrivateKey("com/seitenbau/k8s/auth/test/test_private_key_pkcs8.pem"));
+    }
+    catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException e)
+    {
+      e.printStackTrace();
+    }
   }
 
   @Test

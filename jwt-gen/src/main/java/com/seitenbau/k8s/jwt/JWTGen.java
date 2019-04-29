@@ -1,6 +1,7 @@
 package com.seitenbau.k8s.jwt;
 
 import com.seitenbau.k8s.jwt.service.JWT;
+import com.seitenbau.k8s.jwt.service.KeyReader;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -9,10 +10,12 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 public class JWTGen
 {
-
-
   public static void main(String[] args)
   {
     String issuer = "not defined", subject = "not defined";
@@ -85,12 +88,14 @@ public class JWTGen
         }
       }
 
+      KeyReader keyReader = new KeyReader();
+
       JWT jwt = new JWT();
-      jwt.setPRIVATE_KEY_PATH(keyPath);
+      jwt.setPrivateKey(keyReader.readPrivateKey(keyPath));
       System.out.println(jwt.buildToken(subject, issuer, expDate));
 
     }
-    catch (ParseException e)
+    catch (ParseException | NoSuchAlgorithmException | IOException | InvalidKeySpecException e)
     {
       System.err.println(e.getMessage());
     }

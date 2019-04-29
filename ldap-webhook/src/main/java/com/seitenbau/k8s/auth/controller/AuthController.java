@@ -6,11 +6,11 @@ import com.seitenbau.k8s.auth.model.AuthResponse;
 import com.seitenbau.k8s.auth.model.User;
 import com.seitenbau.k8s.auth.service.LDAP;
 import com.seitenbau.k8s.jwt.service.JWT;
+import com.seitenbau.k8s.jwt.service.KeyReader;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
-import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.concurrent.TimeUnit;
 
-import static com.seitenbau.k8s.jwt.utils.Utils.getMethodName;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.MediaType.TEXT_PLAIN_VALUE;
 
@@ -33,6 +35,8 @@ public class AuthController
 
   private final LDAP ldap;
 
+  private KeyReader keyReader;
+
   private JWT jwt;
 
   private MeterRegistry meterRegistry;
@@ -41,14 +45,25 @@ public class AuthController
   public AuthController(LDAP ldap, @Value("${public_key_path}") String public_key_path, MeterRegistry meterRegistry)
   {
     this.ldap = ldap;
-    jwt = new JWT(public_key_path);
+    this.keyReader = new KeyReader();
+
+    try
+    {
+      jwt = new JWT(keyReader.readPublicKey(public_key_path));
+    }
+    catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException e)
+    {
+      log.error(e.getMessage(), e);
+    }
+
     this.meterRegistry = meterRegistry;
   }
 
   @RequestMapping(value = "/healthz", produces = TEXT_PLAIN_VALUE)
   public String health()
   {
-    meterRegistry.counter("http.requests", "path", "/healthz", "code", Integer.toString(HttpStatus.OK.value())).increment();
+    meterRegistry.counter("http.requests", "path", "/healthz", "code", Integer.toString(HttpStatus.OK.value()))
+                 .increment();
     return "OK\n";
   }
 
@@ -57,9 +72,7 @@ public class AuthController
   {
     long startTime = System.nanoTime();
 
-    final String methodName = getMethodName(new Object()
-    {
-    });
+    final String methodName = "authn";
     log.trace("Start: '" + methodName + "' with parameter authToken: " + authPost.toString());
 
     AuthResponse response = new AuthResponse();
@@ -93,8 +106,10 @@ public class AuthController
     }
 
     log.trace("End: '" + methodName + "' returning " + response);
-    meterRegistry.counter("http.requests", "path", "/authn", "code", Integer.toString(HttpStatus.OK.value())).increment();
-    meterRegistry.timer("http.request.duration", "path", "/authn").record(System.nanoTime() - startTime, TimeUnit.NANOSECONDS);
+    meterRegistry.counter("http.requests", "path", "/authn", "code", Integer.toString(HttpStatus.OK.value()))
+                 .increment();
+    meterRegistry.timer("http.request.duration", "path", "/authn")
+                 .record(System.nanoTime() - startTime, TimeUnit.NANOSECONDS);
 
     return response;
   }

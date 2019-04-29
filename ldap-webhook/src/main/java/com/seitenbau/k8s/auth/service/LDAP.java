@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-import static com.seitenbau.k8s.jwt.utils.Utils.getMethodName;
-
 @Service
 @Slf4j
 public class LDAP
@@ -62,9 +60,7 @@ public class LDAP
 
   public User getUserWithGroups(String name)
   {
-    final String methodName = getMethodName(new Object()
-    {
-    });
+    final String methodName = "getUserWithGroups";
     log.trace("Start: '" + methodName + "' with parameter name: " + name);
 
     LdapContext ctx;
@@ -125,9 +121,7 @@ public class LDAP
 
   private String getValueOfAttribute(Attributes attributes, String key)
   {
-    final String methodName = getMethodName(new Object()
-    {
-    });
+    final String methodName = "getValueOfAttribute";
     log.trace("Start: '" + methodName + "' with parameter attributes: " + attributes + " key: " + key);
 
     Attribute attribute = attributes.get(key);
