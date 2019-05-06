@@ -37,7 +37,7 @@ public class JWT implements Serializable
     return Jwts.parser().setSigningKey(publicKey).parseClaimsJws(token);
   }
 
-  public String buildToken(String subject, String issuer, int time)
+  public String buildToken(String subject, String issuer, int time, String jti)
   {
     final String methodName = "build Token";
     log.trace("Start: " + methodName);
@@ -46,6 +46,7 @@ public class JWT implements Serializable
     try
     {
       result = Jwts.builder()
+                   .setId(jti)
                    .setSubject(subject)
                    .setIssuer(issuer)
                    .setIssuedAt(new Date())

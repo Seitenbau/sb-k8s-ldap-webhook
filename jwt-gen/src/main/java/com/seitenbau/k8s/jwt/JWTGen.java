@@ -92,7 +92,7 @@ public class JWTGen
 
       JWT jwt = new JWT();
       jwt.setPrivateKey(keyReader.readPrivateKey(keyPath));
-      System.out.println(jwt.buildToken(subject, issuer, expDate));
+      System.out.println(jwt.buildToken(subject, issuer, expDate, ""));
 
     }
     catch (ParseException | NoSuchAlgorithmException | IOException | InvalidKeySpecException e)

@@ -47,7 +47,7 @@ public class JWTTests
   {
     String subject = "subject";
     String issuer = "issuer";
-    String token = jwt.buildToken(subject, issuer, 15);
+    String token = jwt.buildToken(subject, issuer, 15, "");
     Jws<Claims> claims = jwt.validateToken(token);
 
     assertEquals(claims.getBody().getSubject(), subject);
@@ -84,7 +84,7 @@ public class JWTTests
   {
     String subject = "subject";
     String issuer = "issuer";
-    String token = jwt.buildToken(subject, issuer, -1);
+    String token = jwt.buildToken(subject, issuer, -1, "");
     jwt.validateToken(token);
   }
 }
