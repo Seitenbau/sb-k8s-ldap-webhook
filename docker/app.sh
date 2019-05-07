@@ -1,3 +1,3 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 java -jar kube.auth.jar

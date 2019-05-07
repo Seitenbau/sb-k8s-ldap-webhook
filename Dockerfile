@@ -15,9 +15,6 @@ COPY --from=build /usr/src/app/ldap-webhook/target/lib ./lib
 COPY docker/token.sh .
 COPY docker/app.sh /usr/local/bin/
 
-RUN ln -s /usr/local/bin/app.sh /
-RUN apk update && apk add bash
-
 VOLUME config
 
 EXPOSE 8087
