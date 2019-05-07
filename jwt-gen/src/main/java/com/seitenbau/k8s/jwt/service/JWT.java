@@ -63,6 +63,31 @@ public class JWT implements Serializable
     return result;
   }
 
+  public String buildToken(String subject, String issuer, int time)
+  {
+    final String methodName = "build Token";
+    log.trace("Start: " + methodName);
+
+    String result = null;
+    try
+    {
+      result = Jwts.builder()
+                   .setSubject(subject)
+                   .setIssuer(issuer)
+                   .setIssuedAt(new Date())
+                   .setExpiration(calculateExpirationDate(time))
+                   .signWith(privateKey)
+                   .compact();
+    }
+    catch (Exception e)
+    {
+      log.error("could not build token", e);
+    }
+
+    log.trace("End: " + methodName);
+    return result;
+  }
+
   private Date calculateExpirationDate(int time)
   {
     Calendar c = Calendar.getInstance();

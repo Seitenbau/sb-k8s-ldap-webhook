@@ -20,6 +20,7 @@ public class JWTGen
   {
     String issuer = "not defined", subject = "not defined";
     String keyPath = "./config/private_key_pkcs8.pem";
+    String jti;
     int expDate = 15;
 
     Options options = new Options();
@@ -32,6 +33,9 @@ public class JWTGen
 
     Option issuerOpt = Option.builder("i").longOpt("issuer").desc("token issuer").hasArg().argName("name").build();
     options.addOption(issuerOpt);
+
+    Option jtiOpt = Option.builder("j").longOpt("jti").desc("jwt id").hasArg().argName("name").build();
+    options.addOption(jtiOpt);
 
     Option expDateOpt = Option.builder("e")
                               .longOpt("expire")
@@ -76,6 +80,7 @@ public class JWTGen
         keyPath = cmd.getOptionValue("key-file");
       }
 
+
       if (cmd.hasOption("expire"))
       {
         try
@@ -92,7 +97,19 @@ public class JWTGen
 
       JWT jwt = new JWT();
       jwt.setPrivateKey(keyReader.readPrivateKey(keyPath));
-      System.out.println(jwt.buildToken(subject, issuer, expDate, ""));
+
+      String token;
+      if (cmd.hasOption("jti"))
+      {
+        jti = cmd.getOptionValue("jti");
+        token = jwt.buildToken(subject, issuer, expDate, jti);
+      }
+      else
+      {
+        token = jwt.buildToken(subject, issuer, expDate);
+      }
+
+      System.out.println(token);
 
     }
     catch (ParseException | NoSuchAlgorithmException | IOException | InvalidKeySpecException e)

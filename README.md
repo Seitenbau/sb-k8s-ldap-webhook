@@ -26,6 +26,7 @@ docker pull seitenbau/k8s-ldap-webhook
         - &ndash;i &rarr; issuer
         - &ndash;f &rarr; private key file inside container 
         - &ndash;e &rarr; days until expiration
+        - &ndash;j &rarr; jwt id
         - &ndash;h &rarr; show help
 ```bash
 docker run -v /path/to/folder/with/private_key:/app/config --entrypoint ./token.sh kubeauth -s subject -i issuer -f ./config/<private_key_name>.pem
@@ -44,7 +45,9 @@ docker run -v /path/to/config:/app/config -p 8087:8087 kubeauth
 ```bash
 curl --header "Content-Type: application/json" \
      --request POST \
-     --data '{"token": "yourToken"}' \
+     --data '"spec": {
+                 "token": "your token"
+               }' \
      http://localhost:8087/authn
 ```
 
