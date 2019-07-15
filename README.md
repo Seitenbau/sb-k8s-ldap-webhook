@@ -45,9 +45,11 @@ docker run -v /path/to/config:/app/config -p 8087:8087 kubeauth
 ```bash
 curl --header "Content-Type: application/json" \
      --request POST \
-     --data '"spec": {
-                 "token": "your token"
-               }' \
+     --data '{
+                "spec":{
+                    "token":"your token"
+                }
+              }' \
      http://localhost:8087/authn
 ```
 

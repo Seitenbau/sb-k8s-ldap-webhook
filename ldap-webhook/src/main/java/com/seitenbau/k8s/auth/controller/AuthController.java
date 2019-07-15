@@ -1,6 +1,5 @@
 package com.seitenbau.k8s.auth.controller;
 
-import com.google.inject.Inject;
 import com.seitenbau.k8s.auth.model.AuthPost;
 import com.seitenbau.k8s.auth.model.AuthResponse;
 import com.seitenbau.k8s.auth.model.User;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
